@@ -11,7 +11,7 @@ import {
   Truck,
 } from "lucide-react";
 import type { Parcel, ParcelStatus } from "../types";
-import { fetchLabels, fetchMessages, formatRelative, progressIndex, statusLabels, statusMessages } from "../format";
+import { fetchLabels, fetchMessages, formatRelative, progressIndex, statusLabels, trackingMessage } from "../format";
 import { CarrierLogo } from "./CarrierLogo";
 
 const statusIcons: Record<ParcelStatus, typeof Box> = {
@@ -62,7 +62,7 @@ export function ParcelCard({ parcel, onOpen, onRefresh, onArchive, onRestore }: 
       </div>
 
       <div className="card-primary">
-        <span>{statusMessages[latestEvent?.status ?? parcel.status]}</span>
+        <span>{trackingMessage(latestEvent?.description ?? parcel.summary, latestEvent?.status ?? parcel.status)}</span>
       </div>
 
       {progress >= 0 ? (

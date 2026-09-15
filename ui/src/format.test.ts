@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { estimateText, fetchMessages, locationText, progressIndex, senderText, statusMessages } from "./format";
+import { estimateText, fetchMessages, locationText, progressIndex, senderText, statusMessages, trackingMessage } from "./format";
 import type { ParcelStatus } from "./types";
 
 describe("estimateText", () => {
@@ -37,5 +37,12 @@ describe("English carrier presentation", () => {
     expect(senderText("Privatversand")).toBe("Private shipment");
     expect(locationText("Deutschland")).toBe("Germany");
     expect(locationText("Paketzentrum Berlin")).toBe("Carrier facility");
+  });
+
+  it("shows the carrier's event message with a normalized fallback", () => {
+    expect(trackingMessage("The shipment was picked up by Hermes in the parcel shop.", "unknown"))
+      .toBe("The shipment was picked up by Hermes in the parcel shop.");
+    expect(trackingMessage("  ", "in_transit"))
+      .toBe("The shipment is moving through the carrier network.");
   });
 });

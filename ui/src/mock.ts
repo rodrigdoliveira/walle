@@ -65,7 +65,7 @@ export const mockParcels: Parcel[] = [
     last_checked_at: isoHoursAgo(0.4),
     last_success_at: isoHoursAgo(0.4),
     next_check_at: isoHoursAgo(-0.6),
-    parser_version: "hermes-de/2026-09-14.2",
+    parser_version: "hermes-de/2026-09-15.3",
   },
   {
     id: "demo-exception",
@@ -126,7 +126,7 @@ export const mockParcels: Parcel[] = [
     last_checked_at: isoHoursAgo(0.9),
     last_success_at: isoHoursAgo(0.9),
     next_check_at: isoHoursAgo(-1.1),
-    parser_version: "hermes-de/2026-09-14.2",
+    parser_version: "hermes-de/2026-09-15.3",
   },
   {
     id: "demo-dhl",
@@ -186,7 +186,7 @@ export const mockParcels: Parcel[] = [
     last_checked_at: isoHoursAgo(0.25),
     last_success_at: isoHoursAgo(0.25),
     next_check_at: isoHoursAgo(-1.75),
-    parser_version: "hermes-de/2026-09-14.2",
+    parser_version: "hermes-de/2026-09-15.3",
   },
   {
     id: "demo-delivered",
@@ -287,5 +287,5 @@ export const mockSettings: Settings = {
 
 export const mockSourceHealth: SourceHealth[] = [
   { carrier: "dhl_paket_de", label: "DHL", enabled: true, parser_version: "dhl-paket-de/2026-09-14.3", last_success_at: isoHoursAgo(0.1), limitation: "Validated with one delivered international parcel." },
-  { carrier: "hermes_de", label: "Hermes Germany", enabled: true, parser_version: "hermes-de/2026-09-14.2", last_success_at: isoHoursAgo(0.25), limitation: "Validated through announced state; later states remain fixture-tested." },
+  { carrier: "hermes_de", label: "Hermes Germany", enabled: true, parser_version: "hermes-de/2026-09-15.3", last_success_at: isoHoursAgo(0.25), limitation: "Validated through parcel-shop handoff; later delivery states remain fixture-tested." },
 ];

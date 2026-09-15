@@ -12,7 +12,7 @@ import {
   X,
 } from "lucide-react";
 import type { Parcel, UpdateParcelInput } from "../types";
-import { carrierLabels, estimateText, fetchLabels, fetchMessages, formatRelative, formatTimestamp, locationText, progressIndex, senderText, statusLabels, statusMessages } from "../format";
+import { carrierLabels, estimateText, fetchLabels, fetchMessages, formatRelative, formatTimestamp, locationText, progressIndex, senderText, statusLabels, trackingMessage } from "../format";
 import { CarrierLogo } from "./CarrierLogo";
 
 interface Props {
@@ -51,6 +51,7 @@ export function DetailsPanel({ parcel, onClose, onRefresh, onArchive, onRestore,
   const archived = Boolean(parcel.archived_at);
   const events = [...parcel.events].sort((a, b) => (Date.parse(b.timestamp ?? "") || 0) - (Date.parse(a.timestamp ?? "") || 0));
   const estimate = estimateText(parcel.estimate);
+  const summary = parcel.summary?.trim() || null;
   const progress = progressIndex(parcel.status);
   const progressLabels = [parcel.carrier === "hermes_de" ? "Announced" : "Picked up", "In transit", parcel.status === "ready_for_pickup" ? "Pickup" : "Out for delivery", "Delivered"];
 
@@ -96,7 +97,7 @@ export function DetailsPanel({ parcel, onClose, onRefresh, onArchive, onRestore,
           </div>
           <section className={`status-hero tone-${parcel.status}`}>
             <span>{statusLabels[parcel.status]}</span>
-            <strong>{estimate ?? statusMessages[parcel.status]}</strong>
+            <strong>{estimate ?? summary ?? trackingMessage(events[0]?.description, parcel.status)}</strong>
           </section>
 
           {progress >= 0 && (
@@ -151,7 +152,7 @@ export function DetailsPanel({ parcel, onClose, onRefresh, onArchive, onRestore,
                   <li key={`${event.timestamp ?? "unknown"}-${event.description}-${index}`}>
                     <span className={`event-dot tone-${event.status}`} />
                     <div>
-                      <strong>{statusMessages[event.status]}</strong>
+                      <strong>{trackingMessage(event.description, event.status)}</strong>
                       <span><CalendarClock size={13} /> {formatTimestamp(event.timestamp)}</span>
                       {event.location && <span><MapPin size={13} /> {locationText(event.location)}</span>}
                     </div>

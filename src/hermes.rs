@@ -18,7 +18,7 @@ use crate::{
 
 const DEFAULT_API_BASE: &str = "https://api.my-deliveries.de";
 const DEFAULT_REFERER: &str = "https://www.myhermes.de/";
-pub const HERMES_PARSER_VERSION: &str = "hermes-de/2026-09-14.2";
+pub const HERMES_PARSER_VERSION: &str = "hermes-de/2026-09-15.3";
 
 #[derive(Clone)]
 pub struct HermesSource {
@@ -371,6 +371,10 @@ fn normalize_hermes_status(
     } else if code.contains("CANCELLED") || code.contains("CANCELED") {
         NormalizedStatus::Cancelled
     } else if code.contains("IN_TRANSIT")
+        || matches!(
+            code.as_str(),
+            "PARCELSHOP_DROP_OFF" | "PARCELSHOP_COLLECTED_BY_DRIVER"
+        )
         || text.contains("unterwegs")
         || text.contains("transportiert")
         || text.contains("verteilzentrum")
@@ -473,6 +477,37 @@ mod tests {
             panic!("expected found")
         };
         assert_eq!(snapshot.status, NormalizedStatus::OutForDelivery);
+    }
+
+    #[test]
+    fn preserves_parcel_shop_messages_and_normalizes_driver_collection() {
+        let body = br#"[{
+          "barcode":"HERMES12345",
+          "parcelProgress":[
+            {
+              "parcelStatus":"PARCELSHOP_COLLECTED_BY_DRIVER",
+              "status":"HAPPY",
+              "timestamp":"2026-09-15T09:22:36.363Z",
+              "historyText":"The shipment was picked up by Hermes in the parcel shop."
+            },
+            {
+              "parcelStatus":"PARCELSHOP_DROP_OFF",
+              "status":"HAPPY",
+              "timestamp":"2026-09-15T08:55:55Z",
+              "historyText":"The shipment was dropped off by the sender at the parcel shop."
+            }
+          ]
+        }]"#;
+        let LookupOutcome::Found { snapshot } = parse_search_response(body, "HERMES12345").unwrap()
+        else {
+            panic!("expected found")
+        };
+        assert_eq!(snapshot.status, NormalizedStatus::InTransit);
+        assert_eq!(snapshot.events[0].status, NormalizedStatus::InTransit);
+        assert_eq!(
+            snapshot.events[0].description,
+            "The shipment was picked up by Hermes in the parcel shop."
+        );
     }
 
     #[test]

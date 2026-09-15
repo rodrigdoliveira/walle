@@ -1,6 +1,6 @@
 # Hermes Germany source contract
 
-Observed: 2026-09-14 · Adapter: `hermes-de/2026-09-14.2`
+Observed: 2026-09-15 · Adapter: `hermes-de/2026-09-15.3`
 
 This contract describes the anonymous JSON flow used by Hermes Germany's current public tracking widget. It is a scraper dependency, not a documented compatibility guarantee from Hermes.
 
@@ -20,7 +20,9 @@ Hermes's official business training document publishes fictional shipment `81529
 
 A private, user-owned international shipment successfully parsed in the `ANNOUNCED` state with one `parcelProgress` event, an RFC 3339 UTC timestamp, and a Correos handoff URL under `viewParameters.internationalTrackingLink`. This confirms the successful-response array, barcode identity, announced event, history text, timestamp, and international-link extraction. The response had no sender name or delivery estimate. The probe redacts both the Hermes number and tracking identifiers embedded in partner URLs.
 
-Later in-transit, pickup, exception, and delivered Hermes responses still need user-owned validation before their status transitions drive notifications.
+A user-owned parcel-shop shipment confirmed `PARCELSHOP_DROP_OFF` and `PARCELSHOP_COLLECTED_BY_DRIVER` events. Their `historyText` values contain the full customer-facing Hermes messages; Walle preserves those messages and treats the physical parcel-shop handoff as in transit. The tracking number and parcel-shop details are not retained in this contract.
+
+Later depot, out-for-delivery, pickup, exception, and delivered Hermes responses still need user-owned validation before their status transitions drive notifications.
 
 ## Failure rules
 

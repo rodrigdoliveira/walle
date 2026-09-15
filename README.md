@@ -94,7 +94,7 @@ cargo run --locked --bin tracking-probe -- dhl
 cargo run --locked --bin tracking-probe -- hermes
 ```
 
-The DHL adapter has been validated against a user-owned delivered international parcel. The Hermes adapter has been validated against a user-owned announced international parcel and its partner-carrier handoff link. Later Hermes states and DHL optional-input success responses are fixture-tested and should be rechecked when suitable user-owned parcels become available.
+The DHL adapter has been validated against a user-owned delivered international parcel. The Hermes adapter has been validated against user-owned announced and parcel-shop handoff states, including an international partner-carrier link. Later Hermes delivery states and DHL optional-input success responses are fixture-tested and should be rechecked when suitable user-owned parcels become available.
 
 ## Documentation
 

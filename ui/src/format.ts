@@ -60,6 +60,10 @@ export const statusMessages: Record<ParcelStatus, string> = {
   cancelled: "The shipment was cancelled.",
 };
 
+export function trackingMessage(description: string | null | undefined, status: ParcelStatus): string {
+  return description?.trim() || statusMessages[status];
+}
+
 export function senderText(value: string): string {
   const normalized = value.trim().toLocaleLowerCase("de-DE");
   if (["privatversand", "privatsendung", "privatkunde"].includes(normalized)) {
