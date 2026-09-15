@@ -2,7 +2,7 @@ import { invoke } from "@tauri-apps/api/core";
 import type { AddParcelInput, Parcel, Settings, SourceHealth, UpdateParcelInput } from "./types";
 import { mockParcels, mockSettings, mockSourceHealth } from "./mock";
 
-const MOCK_PARCELS_KEY = "walle.mock.parcels.v1";
+const MOCK_PARCELS_KEY = "walle.mock.parcels.v2";
 const MOCK_SETTINGS_KEY = "walle.mock.settings.v1";
 
 export const isNative = () => "__TAURI_INTERNALS__" in window;

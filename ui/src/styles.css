@@ -59,12 +59,9 @@ button:disabled { cursor: default; opacity: .52; }
 .app-sidebar::before { content: ""; position: absolute; inset: 7px; pointer-events: none; border: 1px solid #50483c; box-shadow: inset 0 0 0 1px #11120f; border-radius: 8px; }
 .brand { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 10px 7px 22px; border-bottom: 1px solid #4e493f; }
 .brand-optics {
-  width: 132px; height: 66px; padding: 9px; display: flex; justify-content: center; gap: 5px;
-  border: 2px solid #1a1915; border-radius: 28px 28px 16px 16px; transform: rotate(-1deg);
-  background: linear-gradient(145deg, rgba(255,255,255,.2), transparent 25%), linear-gradient(115deg,#9a682c,#d4a24e 43%,#66411e 76%,#b67c30);
-  box-shadow: inset 0 0 0 3px #42301b, 0 4px 0 #111, 0 8px 18px rgba(0,0,0,.48);
+  width: 140px; height: auto; aspect-ratio: 180 / 106; display: block; flex-shrink: 0;
+  object-fit: contain; filter: drop-shadow(0 4px 4px rgba(0,0,0,.4));
 }
-.brand-optics i { width: 48px; height: 45px; display: block; border: 5px solid #2e2519; border-radius: 50%; background: radial-gradient(circle at 38% 35%,#c9d6d9 0 3%,#5d5573 6%,#231c32 23%,#08090a 45%,#161a1a 62%,#050606 68%); box-shadow: inset 0 0 0 3px #8f724b, 0 0 0 1px #080908, 0 3px 5px #000; }
 .brand > div { display: flex; align-items: center; flex-direction: column; line-height: 1; }
 .brand strong, h1, h2, h3 { font-family: "Bahnschrift", "Arial Narrow", "Segoe UI Variable Display", sans-serif; }
 .brand strong { color: #eee4cd; font-size: 26px; font-weight: 800; letter-spacing: .16em; text-shadow: 0 2px #151512; }
@@ -221,7 +218,7 @@ h1 { margin-bottom: 5px; font-size: clamp(31px,4vw,45px); letter-spacing: -.025e
 
 @media (max-width: 980px) {
   .app-shell { grid-template-columns: 82px minmax(0,1fr); } .app-sidebar { padding: 18px 10px 14px; }
-  .brand-optics { width: 58px; height: 38px; padding: 5px; gap: 2px; border-radius: 16px 16px 9px 9px; } .brand-optics i { width: 21px; height: 21px; border-width: 2px; }
+  .brand-optics { width: 58px; }
   .brand > div, .sidebar-label, .side-nav button > span, .side-nav button b, .side-settings span { display: none; }
   .brand { padding-bottom: 17px; } .side-nav button, .side-settings { min-height: 48px; grid-template-columns: 1fr; place-items: center; padding: 0; } .vent { margin-left: 12px; margin-right: 12px; }
   .toolbar { grid-template-columns: minmax(200px,1fr) auto; } .toolbar .compact-select:last-child { grid-column: 1 / -1; }
@@ -229,7 +226,7 @@ h1 { margin-bottom: 5px; font-size: clamp(31px,4vw,45px); letter-spacing: -.025e
 @media (max-width: 720px) {
   .app-shell { display: flex; flex-direction: column; } .app-sidebar { min-height: 66px; height: 66px; width: 100%; flex: 0 0 66px; padding: 8px 12px; position: relative; flex-direction: row; align-items: center; border-bottom: 3px solid #111; }
   .app-sidebar::before, .sidebar-label, .sidebar-spacer, .vent { display: none; } .brand { min-width: 55px; padding: 0 10px 0 0; border: 0; }
-  .brand-optics { width: 48px; height: 32px; } .brand-optics i { width: 17px; height: 17px; }
+  .brand-optics { width: 48px; }
   .side-nav { flex: 1; display: flex; justify-content: center; gap: 5px; } .side-nav button, .side-settings { width: 47px; min-height: 45px; } .side-settings { position: relative; }
   .app-header { min-height: 116px; padding: 20px 18px; position: relative; align-items: flex-start; } .header-copy p, .summary-chip, .hide-compact { display: none; } .header-actions { flex-wrap: nowrap; }
   .app-main { width: calc(100% - 28px); padding-top: 17px; } .toolbar-panel { padding: 13px; } .toolbar { grid-template-columns: 1fr; } .toolbar .compact-select:last-child { grid-column: auto; }

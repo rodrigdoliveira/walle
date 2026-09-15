@@ -6,6 +6,7 @@ import {
   deleteParcel,
   getSettings,
   getSourceHealth,
+  isNative,
   listParcels,
   onParcelsChanged,
   openTrackingPage,
@@ -29,6 +30,7 @@ type Sort = "attention" | "expected" | "updated" | "added";
 type PackageLayout = "comfortable" | "compact";
 
 const PACKAGE_LAYOUT_KEY = "walle.packageLayout";
+const demoMode = new URLSearchParams(window.location.search).get("demo");
 
 function storedPackageLayout(): PackageLayout {
   try {
@@ -67,7 +69,7 @@ export default function App() {
   const [query, setQuery] = useState("");
   const [carrier, setCarrier] = useState<Carrier | "all">("all");
   const [sort, setSort] = useState<Sort>("attention");
-  const [packageLayout, setPackageLayout] = useState<PackageLayout>(storedPackageLayout);
+  const [packageLayout, setPackageLayout] = useState<PackageLayout>(() => demoMode === "compact" ? "compact" : storedPackageLayout());
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [addOpen, setAddOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -90,6 +92,11 @@ export default function App() {
   }, []);
 
   useEffect(() => { void load(); }, [load]);
+  useEffect(() => {
+    if (loading || isNative()) return;
+    if (demoMode === "details" && !selectedId) setSelectedId(parcels.find((parcel) => parcel.id === "demo-pickup")?.id ?? null);
+    if (demoMode === "settings" && !settingsOpen) setSettingsOpen(true);
+  }, [loading, parcels, selectedId, settingsOpen]);
   useEffect(() => {
     let dispose: () => void = () => undefined;
     void onParcelsChanged(() => void load(true)).then((unlisten) => { dispose = unlisten; });
@@ -196,7 +203,7 @@ export default function App() {
       <div className="app-shell">
       <aside className="app-sidebar">
         <div className="brand">
-          <span className="brand-optics" aria-hidden="true"><i /><i /></span>
+          <img className="brand-optics" src="/walle-icon.svg" alt="" aria-hidden="true" />
           <div><strong>WALLE</strong><span>Parcel control</span></div>
         </div>
         <span className="sidebar-label">Tracking bay</span>
