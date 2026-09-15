@@ -1,0 +1,30 @@
+services:
+  core-check:
+    build:
+      context: .
+      target: tooling
+    working_dir: /workspace
+    command:
+      - /bin/sh
+      - -ec
+      - cargo fmt --all -- --check && cargo clippy --locked --all-targets -- -D warnings && cargo test --locked --all-targets
+
+  ui-check:
+    build:
+      context: .
+      target: ui-tooling
+    working_dir: /workspace/ui
+    command:
+      - /bin/sh
+      - -ec
+      - npm run typecheck && npm test && npm run build
+
+  native-check:
+    build:
+      context: .
+      target: native-tooling
+    working_dir: /workspace
+    command:
+      - /bin/sh
+      - -ec
+      - cargo fmt --manifest-path src-tauri/Cargo.toml --all -- --check && cargo clippy --manifest-path src-tauri/Cargo.toml --locked --all-targets -- -D warnings && cargo test --manifest-path src-tauri/Cargo.toml --locked --all-targets

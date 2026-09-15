@@ -1,0 +1,11 @@
+/target/
+/ui/node_modules/
+/src-tauri/target/
+/artifacts/
+/.idea/
+/.vscode/
+*.local
+*.private
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal

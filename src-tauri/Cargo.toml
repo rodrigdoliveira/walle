@@ -1,0 +1,34 @@
+[package]
+name = "walle-app"
+version = "0.1.0"
+description = "Personal DHL and Hermes package tracker"
+authors = ["Walle"]
+edition = "2024"
+license = "MIT"
+rust-version = "1.88"
+
+[lib]
+name = "walle_app_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+rusqlite = { version = "0.37", features = ["bundled"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tauri = { version = "2.11.5", features = ["tray-icon"] }
+tauri-plugin-autostart = "2"
+tauri-plugin-notification = "2"
+tauri-plugin-opener = "2"
+tauri-plugin-single-instance = "2"
+time = { version = "0.3.55", features = ["formatting", "parsing"] }
+tokio = { version = "1", features = ["sync", "time"] }
+urlencoding = "2"
+uuid = { version = "1", features = ["v4"] }
+walle-tracking = { path = ".." }
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
