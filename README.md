@@ -1,5 +1,7 @@
 # Walle
 
+![Walle holding a parcel in a mechanical sorting bay](docs/assets/walle-package-hero.png)
+
 Walle is a local-first personal Windows package tracker built with Tauri v2, React, TypeScript, Rust, and SQLite. It tracks DHL Paket Germany and Hermes Germany shipments from their public tracking flows, keeps the collection on this computer, refreshes active parcels in the background, and shows package cards with full event timelines.
 
 The app supports:
